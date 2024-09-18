@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ArticleController extends Controller
 {
@@ -36,8 +37,12 @@ class ArticleController extends Controller
     }
 
     public function show($id) {
-        $article = Article::find($id);
+        try {
+            $article = Article::findOrFail($id);
 
-        return response()->json($article, 200)
+            return response()->json($article, 200);     
+        } catch (ModelNotFoundException $e) {
+            abort(404);
+        }
     }
 }
