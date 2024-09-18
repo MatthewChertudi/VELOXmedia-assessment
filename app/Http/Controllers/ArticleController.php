@@ -20,8 +20,8 @@ class ArticleController extends Controller
                 'category' => 'required',
                 'published_at' => 'required',
             ]);
-        } catch (ValiditionException $e) {
-            abort(404)
+        } catch (ValidationException $e) {
+            abort(404);
         }
     
         $article = Article::create($validateData);
@@ -30,8 +30,8 @@ class ArticleController extends Controller
     }
 
     public function index() {
-        $articles = Article::all();
+        $articles = Article::orderBy('id', 'asc')->get();
 
-        return response()->json($articles, 200)
+        return response()->json($articles, 200);
     }
 }
