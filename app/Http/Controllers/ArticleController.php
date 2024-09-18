@@ -34,4 +34,10 @@ class ArticleController extends Controller
 
         return response()->json($articles, 200);
     }
+
+    public function show($id) {
+        $article = Article::find($id);
+
+        return response()->json($article, 200)
+    }
 }
