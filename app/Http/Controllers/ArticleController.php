@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class ArticleController extends Controller
 {
     public function store(Request $request) {
-
         try {
 
             $validateData = $request->validate([
@@ -45,4 +44,31 @@ class ArticleController extends Controller
             abort(404);
         }
     }
+
+    public function update(Request $request, $id) {
+        try {
+
+            $validateData = $request->validate([
+                'title' => 'required|max:30',
+                'content' => 'required',
+                'author' => 'required',
+                'category' => 'required',
+                'published_at' => 'required',
+            ]);
+        } catch (ValidationException $e) {
+            abort(404);
+        }
+        $article = Article::find($id);
+
+        if(!$article) {
+            abort(404);
+        }
+
+        $article->update($validateData);
+
+        return response()->json($article, 200);
+
+
+    }
+
 }
