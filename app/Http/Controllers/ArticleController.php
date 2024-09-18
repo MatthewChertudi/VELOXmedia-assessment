@@ -26,6 +26,12 @@ class ArticleController extends Controller
     
         $article = Article::create($validateData);
 
-        return response()->json($article, 201)
+        return response()->json($article, 201);
+    }
+
+    public function index() {
+        $articles = Article::all();
+
+        return response()->json($articles, 200)
     }
 }
