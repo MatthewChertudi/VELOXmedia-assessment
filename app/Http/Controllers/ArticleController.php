@@ -67,8 +67,18 @@ class ArticleController extends Controller
         $article->update($validateData);
 
         return response()->json($article, 200);
+    }
 
+    public function remove($id) {
+        try {
+            $article = Article::findOrFail($id);
 
+            $article->delete();
+
+            return response()->json(null, 200);     
+        } catch (ModelNotFoundException $e) {
+            abort(404);
+        }
     }
 
 }
