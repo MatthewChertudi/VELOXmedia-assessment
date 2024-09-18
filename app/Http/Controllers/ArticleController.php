@@ -26,5 +26,6 @@ class ArticleController extends Controller
     
         $article = Article::create($validateData);
 
+        return response()->json($article, 201)
     }
 }
